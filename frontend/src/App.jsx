@@ -1,0 +1,37 @@
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Manager from './components/Manager';     // Home page
+import Features from './components/Features';
+import Contact from './components/Contact';
+import AuthPage from './components/AuthPage';   // Import your AuthPage component
+import AuditLog from './components/AuditLog';
+import Dashboard from './components/Dashboard';
+
+function App() {
+  return (
+    <Router>
+      <Navbar />
+
+      <main className="min-h-screen">
+        <Routes>
+          <Route path="/" element={<Manager />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/audit-log" element={<AuditLog />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          {/* Auth Routes */}
+          <Route path="/login" element={<AuthPage key="login" />} />
+          <Route path="/register" element={<AuthPage key="register" />} />
+        </Routes>
+      </main>
+
+      <Footer />
+    </Router>
+  );
+}
+
+export default App;

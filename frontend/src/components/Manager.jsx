@@ -11,7 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfileSidebar from "../components/ProfileSidebar";
 
-const API_BASE = `${import.meta.env.VITE_API_URL}/passwords`;
+const API_BASE = `${import.meta.env.VITE_API_URL}/api/passwords`;
+
 
 
 export default function Manager() {

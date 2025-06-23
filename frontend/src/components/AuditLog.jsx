@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_BASE = `${import.meta.env.VITE_API_URL}/audit-logs`;
+const API_BASE = `${import.meta.env.VITE_API_URL}/api/audit-logs`;
+
 
 
 const AuditLog = () => {

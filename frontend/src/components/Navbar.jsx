@@ -17,30 +17,39 @@ const Navbar = () => {
 
     checkAuth();
 
-    // Sync auth status across tabs
     window.addEventListener("storage", checkAuth);
-    window.addEventListener("authChange", checkAuth); // ✅ Add this line
+    window.addEventListener("authChange", checkAuth);
 
     return () => {
       window.removeEventListener("storage", checkAuth);
-      window.removeEventListener("authChange", checkAuth); // ✅ And cleanup here
+      window.removeEventListener("authChange", checkAuth);
     };
-
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
-    navigate("/login");
+    navigate("/landing");
   };
+
+  const hiddenRoutes = ["/login", "/register", "/landing"];
+  const isHiddenRoute = hiddenRoutes.includes(window.location.pathname);
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-white/10 dark:bg-[#0f111a]/50 border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-white text-2xl font-bold tracking-wide cursor-pointer">
-          🔐 Lockr
-        </Link>
+        <span
+  onClick={() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }}
+  className="text-white text-2xl font-bold tracking-wide cursor-pointer"
+>
+  🔐 Lockr
+</span>
+
 
         {/* Hamburger menu for small screens */}
         <div className="md:hidden">
@@ -55,10 +64,10 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex space-x-4 items-center">
-          {isAuthenticated ? (
+          {isAuthenticated && !isHiddenRoute && (
             <>
               <Link
-                to="/"
+                to="/home"
                 className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
               >
                 Home
@@ -69,7 +78,6 @@ const Navbar = () => {
               >
                 Dashboard
               </Link>
-
               <Link
                 to="/audit-log"
                 className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
@@ -95,21 +103,6 @@ const Navbar = () => {
                 Logout
               </button>
             </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-green-300 transition duration-300 shadow-md"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-blue-300 transition duration-300 shadow-md"
-              >
-                Register
-              </Link>
-            </>
           )}
         </div>
       </div>
@@ -117,22 +110,22 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden flex flex-col space-y-3 px-4 pb-4">
-          {isAuthenticated ? (
+          {isAuthenticated && !isHiddenRoute && (
             <>
               <Link
-                to="/"
+                to="/home"
                 onClick={() => setIsOpen(false)}
                 className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md text-center block"
               >
                 Home
               </Link>
+
               <Link
                 to="/dashboard"
                 className="text-center text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
               >
                 Dashboard
               </Link>
-
               <Link
                 to="/audit-log"
                 className="text-center text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
@@ -162,23 +155,6 @@ const Navbar = () => {
               >
                 Logout
               </button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-green-300 transition duration-300 shadow-md text-center block"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                onClick={() => setIsOpen(false)}
-                className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-blue-300 transition duration-300 shadow-md text-center block"
-              >
-                Register
-              </Link>
             </>
           )}
         </div>

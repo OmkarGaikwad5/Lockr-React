@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import AuthPage from './components/AuthPage';   // Import your AuthPage component
 import AuditLog from './components/AuditLog';
 import Dashboard from './components/Dashboard';
+import LandingPage from "./components/LandingPage";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
 
       <main className="min-h-screen">
         <Routes>
-          <Route path="/" element={<Manager />} />
+                    <Route path="/landing" element={<LandingPage />} />
+          <Route path="/home" element={<Manager />} />
           <Route path="/features" element={<Features />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/audit-log" element={<AuditLog />} />

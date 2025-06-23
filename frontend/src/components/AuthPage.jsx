@@ -69,7 +69,7 @@ const AuthPage = () => {
         localStorage.setItem('token', data.token);
         window.dispatchEvent(new Event("authChange"));
         toast.success('Login successful!');
-        setTimeout(() => navigate('/'), 700);
+        setTimeout(() => navigate('/home'), 700);
       } else {
         toast.success('Registration successful!');
         window.dispatchEvent(new Event("authChange"));
@@ -86,87 +86,93 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-      <ToastContainer position="top-right" autoClose={2500} />
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          {isLoginPath ? 'Login to Lockr' : 'Register for Lockr'}
-        </h2>
+    <div className="relative flex items-center justify-center min-h-screen px-4 text-black">
+  {/* ✨ Background grid + radial light */}
+  <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
+    <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div>
+  </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {!isLoginPath && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Full Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="mt-1 w-full px-4 py-2 border rounded-md"
-              />
-              {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
-            </div>
-          )}
+  {/* Auth box content */}
+  <ToastContainer position="top-right" autoClose={1500} />
+  <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+    <h2 className="text-2xl font-bold mb-6 text-center">
+      {isLoginPath ? 'Login to Lockr' : 'Register for Lockr'}
+    </h2>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="mt-1 w-full px-4 py-2 border rounded-md"
-            />
-            {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
-          </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {!isLoginPath && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Full Name</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="mt-1 w-full px-4 py-2 border rounded-md"
+          />
+          {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
+        </div>
+      )}
 
-          <div className="relative">
-            <label className="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="mt-1 w-full px-4 py-2 border rounded-md pr-10"
-            />
-            <div
-              className="absolute top-[42px] right-3 text-gray-600 hover:text-black cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <EyeSlashIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
-              )}
-            </div>
-            {errors.password && (
-              <p className="text-sm text-red-500 mt-1">{errors.password}</p>
-            )}
-          </div>
-
-
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition cursor-pointer"
-          >
-            {isLoginPath ? 'Login' : 'Register'}
-          </button>
-        </form>
-
-        <p className="mt-4 text-center text-sm">
-          {isLoginPath ? "Don't have an account?" : 'Already have an account?'}{' '}
-          <button
-            onClick={toggleRoute}
-            className="text-indigo-600 font-medium hover:underline cursor-pointer"
-          >
-            {isLoginPath ? 'Register here' : 'Login here'}
-          </button>
-        </p>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="mt-1 w-full px-4 py-2 border rounded-md"
+        />
+        {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
       </div>
-    </div>
+
+      <div className="relative">
+        <label className="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          className="mt-1 w-full px-4 py-2 border rounded-md pr-10"
+        />
+        <div
+          className="absolute top-[42px] right-3 text-gray-600 hover:text-black cursor-pointer"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? (
+            <EyeSlashIcon className="h-5 w-5" />
+          ) : (
+            <EyeIcon className="h-5 w-5" />
+          )}
+        </div>
+        {errors.password && (
+          <p className="text-sm text-red-500 mt-1">{errors.password}</p>
+        )}
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition cursor-pointer"
+      >
+        {isLoginPath ? 'Login' : 'Register'}
+      </button>
+    </form>
+
+    <p className="mt-4 text-center text-sm">
+      {isLoginPath ? "Don't have an account?" : 'Already have an account?'}{' '}
+      <button
+        onClick={toggleRoute}
+        className="text-indigo-600 font-medium hover:underline cursor-pointer"
+      >
+        {isLoginPath ? 'Register here' : 'Login here'}
+      </button>
+    </p>
+  </div>
+</div>
+
   );
 };
 

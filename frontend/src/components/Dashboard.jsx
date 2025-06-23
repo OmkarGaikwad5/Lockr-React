@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
-const API = 'http://localhost:5000/api/analytics';
+const API = `${import.meta.env.VITE_API_URL}/analytics`;
+
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);

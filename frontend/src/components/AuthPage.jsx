@@ -43,8 +43,9 @@ const AuthPage = () => {
     if (!validate()) return;
 
     const endpoint = isLoginPath
-      ? 'http://localhost:5000/api/auth/login'
-      : 'http://localhost:5000/api/auth/register';
+  ? `${import.meta.env.VITE_API_URL}/auth/login`
+  : `${import.meta.env.VITE_API_URL}/auth/register`;
+
 
     const payload = isLoginPath
       ? { email: formData.email, password: formData.password }

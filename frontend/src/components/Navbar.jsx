@@ -50,7 +50,7 @@ const Navbar = () => {
               toast.error("Please login to continue");
             }
           }}
-          className="text-white text-2xl font-bold tracking-wide cursor-pointer"
+          className="text-black text-2xl font-bold tracking-wide cursor-pointer"
         >
           🔐 Lockr
         </span>
@@ -59,9 +59,9 @@ const Navbar = () => {
         <div className="md:hidden">
           <button onClick={toggleMenu}>
             {isOpen ? (
-              <XMarkIcon className="w-6 h-6 text-white" />
+              <XMarkIcon className="w-6 h-6 text-black" />
             ) : (
-              <Bars3Icon className="w-6 h-6 text-white" />
+              <Bars3Icon className="w-6 h-6 text-black" />
             )}
           </button>
         </div>

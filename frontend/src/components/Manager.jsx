@@ -130,7 +130,7 @@ export default function Manager() {
         <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]" />
 
         {/* Profile Button */}
-        <div className="absolute top-4 left-40 sm:left-6 md:left-24 lg:left-40 xl:left-56 2xl top-4.5 z-50 transition-all duration-300">
+        <div className="absolute top-4 left-40 sm:left-6 md:left-24 lg:left-40 xl:left-56 2xl:left-1 top-4.5 z-50 transition-all duration-300">
 
           <button
             onClick={() => setSidebarOpen(true)}

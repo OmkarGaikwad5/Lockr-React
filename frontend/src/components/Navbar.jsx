@@ -39,133 +39,132 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-white/10 dark:bg-[#0f111a]/50 border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-all duration-300">
-  <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    {/* Logo */}
-    <span
-      onClick={() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-          navigate("/home");
-        } else {
-          toast.error("Please login to continue");
-        }
-      }}
-      className="text-white text-2xl font-bold tracking-wide cursor-pointer"
-    >
-      🔐 Lockr
-    </span>
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <span
+          onClick={() => {
+            const token = localStorage.getItem("token");
+            if (token) {
+              navigate("/home");
+            } else {
+              toast.error("Please login to continue");
+            }
+          }}
+          className="text-white text-2xl font-bold tracking-wide cursor-pointer"
+        >
+          🔐 Lockr
+        </span>
 
-    {/* Hamburger menu for small screens */}
-    <div className="md:hidden">
-      <button onClick={toggleMenu}>
-        {isOpen ? (
-          <XMarkIcon className="w-6 h-6 text-white" />
-        ) : (
-          <Bars3Icon className="w-6 h-6 text-white" />
-        )}
-      </button>
-    </div>
-
-    {/* Desktop Nav */}
-    <div className="hidden md:flex space-x-4 items-center">
-      {isAuthenticated && !isHiddenRoute && (
-        <>
-          <Link
-            to="/home"
-            className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
-          >
-            Home
-          </Link>
-          <Link
-            to="/dashboard"
-            className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
-          >
-            Dashboard
-          </Link>
-          <Link
-            to="/audit-log"
-            className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
-          >
-            Audit Logs
-          </Link>
-          <Link
-            to="/features"
-            className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
-          >
-            Features
-          </Link>
-          <Link
-            to="/contact"
-            className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
-          >
-            Contact
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="cursor-pointer text-white px-5 py-2 rounded-full font-semibold bg-red-500 hover:bg-red-600 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-          >
-            Logout
+        {/* Hamburger menu */}
+        <div className="md:hidden">
+          <button onClick={toggleMenu}>
+            {isOpen ? (
+              <XMarkIcon className="w-6 h-6 text-white" />
+            ) : (
+              <Bars3Icon className="w-6 h-6 text-white" />
+            )}
           </button>
-        </>
-      )}
-    </div>
-  </div>
+        </div>
 
-  {/* Mobile Menu */}
-  {isOpen && (
-    <div className="md:hidden flex flex-col space-y-3 px-4 pb-4 bg-white/10 dark:bg-[#0f111a]/50 backdrop-blur-lg border-t border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-all duration-300">
-      {isAuthenticated && !isHiddenRoute && (
-        <>
-          <Link
-            to="/home"
-            onClick={() => setIsOpen(false)}
-            className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md text-center block"
-          >
-            Home
-          </Link>
-          <Link
-            to="/dashboard"
-            onClick={() => setIsOpen(false)}
-            className="text-center text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
-          >
-            Dashboard
-          </Link>
-          <Link
-            to="/audit-log"
-            onClick={() => setIsOpen(false)}
-            className="text-center text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
-          >
-            Audit Logs
-          </Link>
-          <Link
-            to="/features"
-            onClick={() => setIsOpen(false)}
-            className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md text-center block"
-          >
-            Features
-          </Link>
-          <Link
-            to="/contact"
-            onClick={() => setIsOpen(false)}
-            className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md text-center block"
-          >
-            Contact
-          </Link>
-          <button
-            onClick={() => {
-              handleLogout();
-              setIsOpen(false);
-            }}
-            className="text-white px-5 py-2 rounded-full font-semibold bg-red-500 hover:bg-red-600 transition duration-300 shadow-md text-center block"
-          >
-            Logout
-          </button>
-        </>
-      )}
-    </div>
-  )}
-</nav>
+        {/* Desktop Nav */}
+        <div className="hidden md:flex space-x-4 items-center">
+          {isAuthenticated && !isHiddenRoute && (
+            <>
+              <Link
+                to="/home"
+                className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
+              >
+                Home
+              </Link>
+              <Link
+                to="/dashboard"
+                className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/audit-log"
+                className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
+              >
+                Audit Logs
+              </Link>
+              <Link
+                to="/features"
+                className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
+              >
+                Features
+              </Link>
+              <Link
+                to="/contact"
+                className="text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
+              >
+                Contact
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer text-white px-5 py-2 rounded-full font-semibold bg-red-500 hover:bg-red-600 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </div>
+      </div>
 
+      {/* Mobile Menu (consistent styles with desktop) */}
+      {isOpen && (
+        <div className="md:hidden flex flex-col space-y-3 px-4 pb-4 pt-2 bg-white/10 dark:bg-[#0f111a]/50 backdrop-blur-lg border-t border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+          {isAuthenticated && !isHiddenRoute && (
+            <>
+              <Link
+                to="/home"
+                onClick={() => setIsOpen(false)}
+                className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md text-center block"
+              >
+                Home
+              </Link>
+              <Link
+                to="/dashboard"
+                onClick={() => setIsOpen(false)}
+                className="text-center text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/audit-log"
+                onClick={() => setIsOpen(false)}
+                className="text-center text-black px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md"
+              >
+                Audit Logs
+              </Link>
+              <Link
+                to="/features"
+                onClick={() => setIsOpen(false)}
+                className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md text-center block"
+              >
+                Features
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => setIsOpen(false)}
+                className="text-black w-full px-5 py-2 rounded-full font-semibold bg-white hover:bg-yellow-300 transition duration-300 shadow-md text-center block"
+              >
+                Contact
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsOpen(false);
+                }}
+                className="text-white px-5 py-2 rounded-full font-semibold bg-red-500 hover:bg-red-600 transition duration-300 shadow-md text-center block"
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </div>
+      )}
+    </nav>
   );
 };
 

@@ -1,0 +1,8 @@
+#nprogress .bar {
+  background: red !important;       /* 🔴 red color */
+  height: 3px !important;           /* ⬆️ increased height */
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px red, 0 0 5px red;
+}

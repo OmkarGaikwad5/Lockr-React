@@ -56,12 +56,12 @@ const Navbar = () => {
         </span>
 
         {/* Hamburger menu */}
-        <div className="md:hidden">
+        <div className="md:hidden ">
           <button onClick={toggleMenu}>
             {isOpen ? (
-              <XMarkIcon className="w-6 h-6 text-black" />
+              <XMarkIcon className="w-6 h-6 text-black cursor-pointer" />
             ) : (
-              <Bars3Icon className="w-6 h-6 text-black" />
+              <Bars3Icon className="w-6 h-6 text-black cursor-pointer" />
             )}
           </button>
         </div>

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { startLoader,stopLoader } from '../utils/nprogressLoader';
 
 const AuthPage = () => {
   const location = useLocation();
@@ -38,6 +39,7 @@ const AuthPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   if (!validate()) return;
@@ -51,8 +53,10 @@ const handleSubmit = async (e) => {
     : { name: formData.name, email: formData.email, password: formData.password };
 
   try {
+    startLoader(); // ✅ Start the top loader
+
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 7000); // ⏱ max 7s
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // ⏱ max 1s
 
     const res = await fetch(endpoint, {
       method: 'POST',
@@ -66,9 +70,12 @@ const handleSubmit = async (e) => {
     const data = await res.json();
 
     if (!res.ok) {
+      stopLoader(); // ✅ Stop loader before returning
       toast.error(data.error || 'Authentication failed');
       return;
     }
+
+    stopLoader(); // ✅ Stop loader before success actions
 
     if (isLoginPath) {
       localStorage.setItem('token', data.token);
@@ -81,10 +88,12 @@ const handleSubmit = async (e) => {
       setTimeout(() => toast.success('Registration successful!'), 200);
     }
   } catch (error) {
+    stopLoader(); // ✅ Stop loader on catch
     console.error("🔴 Auth error:", error);
     toast.error(error.name === 'AbortError' ? 'Server timeout, try again' : 'Server error. Please try again later.');
   }
 };
+
 
 
   const toggleRoute = () => {

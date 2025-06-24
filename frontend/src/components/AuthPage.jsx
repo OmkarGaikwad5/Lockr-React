@@ -38,50 +38,54 @@ const AuthPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validate()) return;
 
-    const endpoint = isLoginPath
-      ? `${import.meta.env.VITE_API_URL}/api/auth/login`
-      : `${import.meta.env.VITE_API_URL}/api/auth/register`;
+  const endpoint = isLoginPath
+    ? `${import.meta.env.VITE_API_URL}/api/auth/login`
+    : `${import.meta.env.VITE_API_URL}/api/auth/register`;
 
+  const payload = isLoginPath
+    ? { email: formData.email, password: formData.password }
+    : { name: formData.name, email: formData.email, password: formData.password };
 
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 7000); // ⏱ max 7s
 
-    const payload = isLoginPath
-      ? { email: formData.email, password: formData.password }
-      : { name: formData.name, email: formData.email, password: formData.password };
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
 
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+    clearTimeout(timeoutId);
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        toast.error(data.error || 'Authentication failed');
-        return;
-      }
-
-      if (isLoginPath) {
-        localStorage.setItem('token', data.token);
-        window.dispatchEvent(new Event("authChange"));
-        toast.success('Login successful!');
-        navigate('/home');
-      } else {
-        toast.success('Registration successful!');
-        window.dispatchEvent(new Event("authChange"));
-        navigate('/login');
-      }
-
-    } catch (error) {
-      console.error("🔴 Auth error:", error);
-      toast.error('Server error. Please try again later.');
+    if (!res.ok) {
+      toast.error(data.error || 'Authentication failed');
+      return;
     }
-  };
+
+    if (isLoginPath) {
+      localStorage.setItem('token', data.token);
+      window.dispatchEvent(new Event("authChange"));
+      navigate('/home');
+      setTimeout(() => toast.success('Login successful!'), 200);
+    } else {
+      window.dispatchEvent(new Event("authChange"));
+      navigate('/login');
+      setTimeout(() => toast.success('Registration successful!'), 200);
+    }
+  } catch (error) {
+    console.error("🔴 Auth error:", error);
+    toast.error(error.name === 'AbortError' ? 'Server timeout, try again' : 'Server error. Please try again later.');
+  }
+};
+
 
   const toggleRoute = () => {
     navigate(isLoginPath ? '/register' : '/login');

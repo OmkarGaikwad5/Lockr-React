@@ -16,19 +16,21 @@ const ProfileSidebar = ({ isOpen, onClose }) => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
-  headers: { Authorization: `Bearer ${token}` },
-});
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
 
 
       const data = await res.json();
       if (res.ok) {
         setUser(data);
+        console.log(data);
         setFormData({
           fullname: data.fullname || "",
           email: data.email || "",
         });
+
       } else {
         toast.error(data.message || "Failed to fetch profile");
       }
@@ -48,13 +50,18 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
       setIsSaving(true);
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/profile`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
+
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          fullname: formData.fullname,
+          email: formData.email,
+        }),
+
       });
 
       const data = await res.json();
@@ -65,10 +72,13 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
           fullname: formData.fullname,
           email: formData.email,
         });
+
+
         setFormData({
-          fullname: formData.fullname,
-          email: formData.email,
+          fullname: data.fullname || "",
+          email: data.email || "",
         });
+
         setEditable(false);
       } else {
         toast.error(data.message || "Update failed");
@@ -107,12 +117,14 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
               type="text"
               name="fullname"
               value={formData.fullname}
+
               onChange={handleChange}
               className="w-full mt-1 p-3 rounded-xl bg-white/10 text-white placeholder-gray-300 outline-none focus:ring-2 ring-sky-500"
               placeholder="Enter your name"
             />
           ) : (
             <p className="mt-1 text-white text-base">{user?.fullname || "Not available"}</p>
+
           )}
         </div>
 

@@ -10,12 +10,13 @@ import AuthPage from './components/AuthPage';   // Import your AuthPage componen
 import AuditLog from './components/AuditLog';
 import Dashboard from './components/Dashboard';
 import LandingPage from "./components/LandingPage";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <Router>
       <Navbar />
-
+  <ToastContainer position="top-right" autoClose={1500} /> {/* Global container */}
       <main className="min-h-screen">
         <Routes>
           <Route path="/" element={<Navigate to="/landing" />} />

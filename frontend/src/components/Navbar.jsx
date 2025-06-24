@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,7 @@ const Navbar = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/landing");
+    toast.success("Logged Out Successfully");
   };
 
   const hiddenRoutes = ["/login", "/register", "/landing"];
@@ -37,18 +39,24 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-white/10 dark:bg-[#0f111a]/50 border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-all duration-300">
+
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
-        <span
+      <span
   onClick={() => {
-    if (isAuthenticated) {
-      navigate("/");
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigate("/home");
+    } else {
+      toast.error("Please login to continue");
     }
   }}
   className="text-white text-2xl font-bold tracking-wide cursor-pointer"
 >
   🔐 Lockr
 </span>
+
 
 
         {/* Hamburger menu for small screens */}

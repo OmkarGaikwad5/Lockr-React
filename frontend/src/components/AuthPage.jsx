@@ -69,11 +69,13 @@ const handleSubmit = async (e) => {
 
     const data = await res.json();
 
-    if (!res.ok) {
-      stopLoader(); // ✅ Stop loader before returning
-      toast.error(data.error || 'Authentication failed');
-      return;
-    }
+   if (!res.ok) {
+  stopLoader();
+  console.error("❌ Auth error response:", data); // log for debug
+  toast.error(data?.message || data?.error || 'Authentication failed');
+  return;
+}
+
 
     stopLoader(); // ✅ Stop loader before success actions
 
